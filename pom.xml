@@ -16,7 +16,7 @@
     </properties>
 
     <modules>
-        <module>my-countries</module>
+        <module>countrybrowser</module>
     </modules>
 
     <repositories>

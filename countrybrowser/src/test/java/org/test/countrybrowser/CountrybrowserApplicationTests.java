@@ -1,10 +1,10 @@
-package org.test.mycountries;
+package org.test.countrybrowser;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MycountriesApplicationTests {
+class CountrybrowserApplicationTests {
 
 	@Test
 	void contextLoads() {
