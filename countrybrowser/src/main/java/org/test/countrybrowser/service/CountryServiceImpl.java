@@ -1,5 +1,6 @@
 package org.test.countrybrowser.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.test.countrybrowser.entity.Country;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 @Service
+@Slf4j
 public class CountryServiceImpl implements CountryService{
 
     @Autowired
@@ -21,7 +23,9 @@ public class CountryServiceImpl implements CountryService{
 
     @Override
     public List<Country> getCountryList() {
-        return countryRepository.findAll();
+        log.info("Getting all countries list at the service.");
+        List<Country> countryList = countryRepository.findAll();
+        return countryList;
     }
 
     @Override
