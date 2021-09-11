@@ -1,11 +1,16 @@
 package org.test.countrybrowser.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.test.countrybrowser.client.RestClient;
+import org.test.countrybrowser.client.RestClientImpl;
 import org.test.countrybrowser.entity.Country;
 import org.test.countrybrowser.repository.CountryRepository;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -15,6 +20,9 @@ public class CountryServiceImpl implements CountryService{
 
     @Autowired
     CountryRepository countryRepository;
+
+    @Autowired
+    RestClient restClient;
 
     @Override
     public Country getCountry(Country country) {
@@ -26,6 +34,10 @@ public class CountryServiceImpl implements CountryService{
         log.info("Getting all countries list at the service.");
         List<Country> countryList = countryRepository.findAll();
         return countryList;
+    }
+
+    public CloseableHttpResponse getCountryListFromCountryService() throws IOException {
+        return restClient.get(RestClient.GET_COUNTRIES_LIST_URL);
     }
 
     @Override

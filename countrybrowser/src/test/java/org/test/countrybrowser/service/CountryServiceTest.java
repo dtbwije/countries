@@ -1,5 +1,8 @@
 package org.test.countrybrowser.service;
 
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,9 +18,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.test.countrybrowser.entity.Country;
 import org.test.countrybrowser.repository.CountryRepository;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -45,7 +51,7 @@ class CountryServiceTest {
 
     @Test
     @DisplayName("Valid country list is returned with correct parameters.")
-    void testGetCountryListIsSuccessWithCorrectParams() {
+    void testGetCountryListIsSuccessWithCorrectParams() throws IOException {
         List<Country> actual = subject.getCountryList();
         assertEquals(3,actual.size());
         assertEquals(countryList,actual);
@@ -56,5 +62,13 @@ class CountryServiceTest {
     @DisplayName("Valid country is returned with existing name  parameters.")
     void testGetCountryByNameIsASuccessWithCorrectParams(int index) {
         assertEquals(subject.getCountryByName(countryList.get(index).getCountryName()),countryList.get(index));
+    }
+
+    @Test
+    void testHttpClientResponse() throws IOException {
+        final CloseableHttpResponse closeableHttpResponse = subject.getCountryListFromCountryService();
+        assertEquals(closeableHttpResponse.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
+        String bodyAsString = EntityUtils.toString(closeableHttpResponse.getEntity());
+        assertThat(bodyAsString, notNullValue());
     }
 }

@@ -11,6 +11,9 @@ import org.test.countrybrowser.controller.CountryController;
 import org.test.countrybrowser.entity.Country;
 import org.test.countrybrowser.service.CountryService;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 @SpringBootTest(classes = CountrybrowserApplication.class)
 public class BaseCountryServiceTest {
@@ -25,7 +28,11 @@ public class BaseCountryServiceTest {
     public void setup() {
         RestAssuredMockMvc.standaloneSetup(countryController);
 
+        List<Country> countryList = Arrays.asList(new Country(1L, "Finland", "FI"),new Country(2L,"Sweden","SW"), new Country(3L,"Norway","NW"));
+
         Mockito.when(countryService.getCountryByName("Finland"))
                 .thenReturn(new Country(1L, "Finland", "FI"));
+        Mockito.when(countryService.getCountryList())
+                .thenReturn(countryList);
     }
 }
