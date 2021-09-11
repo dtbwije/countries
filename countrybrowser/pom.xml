@@ -10,12 +10,18 @@
 	</parent>
 	<groupId>org.test</groupId>
 	<artifactId>countrybrowser</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>countrybrowser</name>
 	<description>Demo project for Spring Boot</description>
+
+
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<spring-cloud.version>2020.0.1</spring-cloud.version>
+		<spring-cloud-contract.version>3.0.1</spring-cloud-contract.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -32,23 +38,30 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 
-		<!--<dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-contract-verifier</artifactId>
 			<scope>test</scope>
-		</dependency>-->
+		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<type>pom</type>
+				<scope>import</scope>
+				<version>${spring-cloud.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
@@ -57,11 +70,16 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<!--<plugin>
+			<plugin>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-contract-maven-plugin</artifactId>
+				<version>${spring-cloud-contract.version}</version>
 				<extensions>true</extensions>
-			</plugin>-->
+				<configuration>
+					<testFramework>JUNIT5</testFramework>
+					<baseClassForTests>org.test.countrybrowser.contract.BaseCountryServiceTest</baseClassForTests>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
