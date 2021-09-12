@@ -8,8 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.test.countrybrowser.CountrybrowserApplication;
 import org.test.countrybrowser.controller.CountryController;
-import org.test.countrybrowser.entity.Country;
+import org.test.countrybrowser.entity.CountryInList;
 import org.test.countrybrowser.service.CountryService;
+import reactor.core.publisher.Flux;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,10 +29,10 @@ public class BaseCountryServiceTest {
     public void setup() {
         RestAssuredMockMvc.standaloneSetup(countryController);
 
-        List<Country> countryList = Arrays.asList(new Country(1L, "Finland", "FI"),new Country(2L,"Sweden","SW"), new Country(3L,"Norway","NW"));
+        List<CountryInList> countryList = Arrays.asList(new CountryInList("Finland", "FI"),new CountryInList("Sweden","SW"), new CountryInList("Norway","NW"));
 
         Mockito.when(countryService.getCountryByName("Finland"))
-                .thenReturn(new Country(1L, "Finland", "FI"));
+                .thenReturn(new CountryInList( "Finland", "FI"));
         Mockito.when(countryService.getCountryList())
                 .thenReturn(countryList);
     }

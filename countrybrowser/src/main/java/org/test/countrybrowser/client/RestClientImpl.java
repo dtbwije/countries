@@ -1,28 +1,28 @@
 package org.test.countrybrowser.client;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
 
 public class RestClientImpl implements RestClient{
 
-    private CloseableHttpClient closableRestClient;
+    private WebClient webClient;
 
     public RestClientImpl(){
-        closableRestClient =  HttpClientBuilder.create().build();
+        webClient =  WebClient.builder()
+                .baseUrl(BASE_URI)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
     }
 
 
     @Override
-    public CloseableHttpResponse get(String url) throws IOException {
-        return closableRestClient.execute(new HttpGet(url));
+    public WebClient.ResponseSpec get(String url) throws IOException {
+        return webClient.get()
+                .uri(url)
+                .retrieve();
     }
 
-    @Override
-    public void close() throws IOException {
-        closableRestClient.close();
-    }
 }

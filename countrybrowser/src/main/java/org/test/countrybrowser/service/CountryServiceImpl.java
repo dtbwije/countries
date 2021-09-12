@@ -1,64 +1,49 @@
 package org.test.countrybrowser.service;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.test.countrybrowser.client.RestClient;
 import org.test.countrybrowser.client.RestClientImpl;
-import org.test.countrybrowser.entity.Country;
+import org.test.countrybrowser.entity.CountryInList;
+import org.test.countrybrowser.entity.CountryInfo;
 import org.test.countrybrowser.repository.CountryRepository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.function.Supplier;
 
 @Service
 @Slf4j
 public class CountryServiceImpl implements CountryService{
 
     @Autowired
-    CountryRepository countryRepository;
+    private CountryRepository countryRepository;
 
-    @Autowired
-    RestClient restClient;
+    //TODO implement autowire
+    private RestClient restClient;
 
-    @Override
-    public Country getCountry(Country country) {
-        return countryRepository.save(country);
+    public CountryServiceImpl(){
+        restClient = new RestClientImpl();
     }
 
+
     @Override
-    public List<Country> getCountryList() {
+    public Flux<CountryInList> getCountryList() throws IOException {
         log.info("Getting all countries list at the service.");
-        List<Country> countryList = countryRepository.findAll();
-        return countryList;
+        return  restClient.get(RestClient.GET_COUNTRIES_LIST_URL).bodyToFlux(CountryInList.class);
+
     }
 
-    public CloseableHttpResponse getCountryListFromCountryService() throws IOException {
-        return restClient.get(RestClient.GET_COUNTRIES_LIST_URL);
-    }
-
+    @SneakyThrows
     @Override
-    public Country getCountryById(Long countryId) {
-        CountrySupplier supplier = () -> {
-            Country a = new Country();
-            a.setCountryName("Non existent");
-            a.setId(new Long(1234));
-            a.setCountryCode("Non");
-            return a;
-        };
-        return countryRepository.findById(countryId).orElseGet((Supplier<? extends Country>) supplier);
-    }
-
-    @Override
-    public Country getCountryByName(String countryName) {
-        return countryRepository.findByCountryName(countryName);
+    public Flux<CountryInfo> getCountryByName(String countryName) {
+        return restClient.get(RestClient.GET_COUNTRY_URL).bodyToFlux(CountryInfo.class);
     }
 
     @FunctionalInterface
     interface CountrySupplier{
-        Country newCountry();
+        CountryInList newCountry();
     }
 }

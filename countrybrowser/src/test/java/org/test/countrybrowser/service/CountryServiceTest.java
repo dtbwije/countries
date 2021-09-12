@@ -3,20 +3,18 @@ package org.test.countrybrowser.service;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.test.countrybrowser.entity.Country;
+import org.test.countrybrowser.entity.CountryInList;
 import org.test.countrybrowser.repository.CountryRepository;
+import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -35,14 +33,14 @@ class CountryServiceTest {
     @MockBean
     private CountryRepository countryRepository;
 
-    private List<Country> countryList;
+    private List<CountryInList> countryList;
 
     @BeforeEach
     void setupTests(){
 
-        countryList = Arrays.asList(Country.builder().id(1L).countryCode("FI").countryName("Finland").build(),
-                Country.builder().id(2L).countryCode("LK").countryName("Sri Lanka").build(),
-                Country.builder().id(3L).countryCode("GB").countryName("Great Britain").build());
+        countryList = Arrays.asList(CountryInList.builder().countryCode("FI").countryName("Finland").build(),
+                CountryInList.builder().countryCode("LK").countryName("Sri Lanka").build(),
+                CountryInList.builder().countryCode("GB").countryName("Great Britain").build());
         Mockito.when(countryRepository.findAll()).thenReturn(countryList);
         Mockito.when(countryRepository.findByCountryName("Finland")).thenReturn(countryList.get(0));
         Mockito.when(countryRepository.findByCountryName("Sri Lanka")).thenReturn(countryList.get(1));
@@ -52,7 +50,8 @@ class CountryServiceTest {
     @Test
     @DisplayName("Valid country list is returned with correct parameters.")
     void testGetCountryListIsSuccessWithCorrectParams() throws IOException {
-        List<Country> actual = subject.getCountryList();
+        Flux<CountryInList> actual = subject.getCountryList();
+        actual.
         assertEquals(3,actual.size());
         assertEquals(countryList,actual);
     }

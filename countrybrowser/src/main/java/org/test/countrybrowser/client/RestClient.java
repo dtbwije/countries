@@ -1,15 +1,15 @@
 package org.test.countrybrowser.client;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
 
 public interface RestClient {
 
-    String GET_COUNTRIES_LIST_URL = "https://restcountries.eu/rest/v2/all";
-    String GET_COUNTRY_URL = "https://restcountries.eu/rest/v2/name/";
+    String GET_COUNTRIES_LIST_URL = "/all";
+    String GET_COUNTRY_URL = "/name/{name}";
+    String BASE_URI="https://restcountries.eu/rest/v2";
 
-    CloseableHttpResponse get(String url) throws IOException;
+    WebClient.ResponseSpec get(String url) throws IOException;
 
-    void close() throws IOException;
 }

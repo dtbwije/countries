@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.test.countrybrowser.entity.Country;
+import org.test.countrybrowser.entity.CountryInList;
 import org.test.countrybrowser.service.CountryService;
 
 import java.util.Arrays;
@@ -31,19 +31,19 @@ class CountryControllerTest {
     @MockBean
     private CountryService countryService;
 
-    private List<Country> inputCountryList;
+    private List<CountryInList> inputCountryList;
 
-    private List<Country> outputCountryList;
+    private List<CountryInList> outputCountryList;
 
     @BeforeEach
     public void setupTest(){
-        inputCountryList = Arrays.asList(Country.builder().countryCode("FI").countryName("Finland").build(),
-                Country.builder().countryCode("LK").countryName("Sri Lanka").build(),
-                Country.builder().countryCode("GB").countryName("Great Britain").build());
+        inputCountryList = Arrays.asList(CountryInList.builder().countryCode("FI").countryName("Finland").build(),
+                CountryInList.builder().countryCode("LK").countryName("Sri Lanka").build(),
+                CountryInList.builder().countryCode("GB").countryName("Great Britain").build());
 
-        outputCountryList = Arrays.asList(Country.builder().id(1L).countryCode("FI").countryName("Finland").build(),
-                Country.builder().id(2L).countryCode("LK").countryName("Sri Lanka").build(),
-                Country.builder().id(3L).countryCode("GB").countryName("Great Britain").build());
+        outputCountryList = Arrays.asList(CountryInList.builder().id(1L).countryCode("FI").countryName("Finland").build(),
+                CountryInList.builder().id(2L).countryCode("LK").countryName("Sri Lanka").build(),
+                CountryInList.builder().id(3L).countryCode("GB").countryName("Great Britain").build());
 
         when(countryService.getCountryList()).thenReturn(outputCountryList);
         when(countryService.getCountryByName("Finland")).thenReturn(outputCountryList.get(0));
