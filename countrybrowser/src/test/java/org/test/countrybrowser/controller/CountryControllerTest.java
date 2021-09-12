@@ -1,17 +1,20 @@
 package org.test.countrybrowser.controller;
 
 import lombok.SneakyThrows;
+import okhttp3.mockwebserver.MockWebServer;
 import org.apache.http.HttpHeaders;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.test.countrybrowser.mock.RestCountriesService;
 import org.test.countrybrowser.service.CountryService;
 import org.test.countrybrowser.service.CountryServiceImpl;
+
+import java.io.IOException;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = CountryController.class)
@@ -20,6 +23,27 @@ class CountryControllerTest {
 
     @Autowired
     private WebTestClient webClient;
+
+    public static MockWebServer mockBackEnd;
+    private RestCountriesService restCountriesService;
+
+    @BeforeAll
+    static void setUp() throws IOException {
+        mockBackEnd = new MockWebServer();
+        mockBackEnd.start();
+    }
+
+    @BeforeEach
+    void initialize() {
+        String baseUrl = String.format("http://localhost:%s",
+                mockBackEnd.getPort());
+        restCountriesService = new RestCountriesService();
+    }
+
+    @AfterAll
+    static void tearDown() throws IOException {
+        mockBackEnd.shutdown();
+    }
 
     @SneakyThrows
     @Test

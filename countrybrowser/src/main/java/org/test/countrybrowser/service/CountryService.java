@@ -1,16 +1,17 @@
 package org.test.countrybrowser.service;
 
 
-import org.test.countrybrowser.dto.request.CountryInList;
-import org.test.countrybrowser.dto.request.CountryInfo;
+import org.test.countrybrowser.dto.response.CountryInfo4Response;
+import org.test.countrybrowser.dto.response.CountryList4Response;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
 
 public interface CountryService {
 
-    Flux<CountryInList> getCountryList() throws IOException;
+    Flux<CountryList4Response> getCountryList() throws IOException;
 
-    Flux<CountryInfo> getCountryByName(String countryName);
+    Mono<CountryInfo4Response> getCountryByName(String countryName);
 }

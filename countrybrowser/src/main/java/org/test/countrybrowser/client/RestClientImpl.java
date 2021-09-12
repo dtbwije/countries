@@ -17,7 +17,6 @@ public class RestClientImpl implements RestClient{
                 .build();
     }
 
-
     @Override
     public WebClient.ResponseSpec get(String url) throws IOException {
         return webClient.get()
