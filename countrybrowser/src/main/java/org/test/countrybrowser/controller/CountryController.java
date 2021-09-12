@@ -2,8 +2,8 @@ package org.test.countrybrowser.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.test.countrybrowser.entity.CountryInList;
-import org.test.countrybrowser.entity.CountryInfo;
+import org.test.countrybrowser.dto.request.CountryInList;
+import org.test.countrybrowser.dto.request.CountryInfo;
 import org.test.countrybrowser.service.CountryService;
 import reactor.core.publisher.Flux;
 

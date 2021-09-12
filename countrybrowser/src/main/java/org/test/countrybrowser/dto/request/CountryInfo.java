@@ -1,4 +1,4 @@
-package org.test.countrybrowser.entity;
+package org.test.countrybrowser.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

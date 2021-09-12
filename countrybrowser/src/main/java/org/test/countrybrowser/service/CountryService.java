@@ -1,10 +1,9 @@
 package org.test.countrybrowser.service;
 
 
-import org.test.countrybrowser.entity.CountryInList;
-import org.test.countrybrowser.entity.CountryInfo;
+import org.test.countrybrowser.dto.request.CountryInList;
+import org.test.countrybrowser.dto.request.CountryInfo;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 

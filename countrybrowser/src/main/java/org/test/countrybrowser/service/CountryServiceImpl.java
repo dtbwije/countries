@@ -2,13 +2,11 @@ package org.test.countrybrowser.service;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.test.countrybrowser.client.RestClient;
 import org.test.countrybrowser.client.RestClientImpl;
-import org.test.countrybrowser.entity.CountryInList;
-import org.test.countrybrowser.entity.CountryInfo;
-import org.test.countrybrowser.repository.CountryRepository;
+import org.test.countrybrowser.dto.request.CountryInList;
+import org.test.countrybrowser.dto.request.CountryInfo;
 import reactor.core.publisher.Flux;
 
 import java.io.IOException;
