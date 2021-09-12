@@ -1,66 +1,36 @@
 package org.test.countrybrowser.controller;
 
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.BeforeEach;
+import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.test.countrybrowser.entity.CountryInList;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.test.countrybrowser.service.CountryService;
+import org.test.countrybrowser.service.CountryServiceImpl;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-@WebMvcTest
+@ExtendWith(SpringExtension.class)
+@WebFluxTest(controllers = CountryController.class)
+@Import(CountryServiceImpl.class)
 class CountryControllerTest {
 
     @Autowired
-    private CountryController subject;
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private CountryService countryService;
-
-    private List<CountryInList> inputCountryList;
-
-    private List<CountryInList> outputCountryList;
-
-    @BeforeEach
-    public void setupTest(){
-        inputCountryList = Arrays.asList(CountryInList.builder().countryCode("FI").countryName("Finland").build(),
-                CountryInList.builder().countryCode("LK").countryName("Sri Lanka").build(),
-                CountryInList.builder().countryCode("GB").countryName("Great Britain").build());
-
-        outputCountryList = Arrays.asList(CountryInList.builder().id(1L).countryCode("FI").countryName("Finland").build(),
-                CountryInList.builder().id(2L).countryCode("LK").countryName("Sri Lanka").build(),
-                CountryInList.builder().id(3L).countryCode("GB").countryName("Great Britain").build());
-
-        when(countryService.getCountryList()).thenReturn(outputCountryList);
-        when(countryService.getCountryByName("Finland")).thenReturn(outputCountryList.get(0));
-
-
-    }
+    private WebTestClient webClient;
 
     @SneakyThrows
     @Test
     @DisplayName("get country list is a success.")
     void testGetCountriesIsASuccess() {
-        mockMvc.perform(MockMvcRequestBuilders.get("/countryservice/countries").contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk());
+        webClient.get().uri("/countryservice/countries").header(HttpHeaders.ACCEPT,"application/json").exchange().expectStatus().isOk();
     }
 
     @Test
     @DisplayName("")
     void testGetCountriesByNameIsASuccess() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/countryservice/country/name/Finland").contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk());
+        webClient.get().uri("/countryservice/country/name/Albania").header(HttpHeaders.ACCEPT,"application/json").exchange().expectStatus().isOk();
     }
 }

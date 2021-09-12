@@ -10,16 +10,12 @@ import org.test.countrybrowser.entity.CountryInList;
 import org.test.countrybrowser.entity.CountryInfo;
 import org.test.countrybrowser.repository.CountryRepository;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
 @Service
 @Slf4j
 public class CountryServiceImpl implements CountryService{
-
-    @Autowired
-    private CountryRepository countryRepository;
 
     //TODO implement autowire
     private RestClient restClient;
@@ -42,8 +38,4 @@ public class CountryServiceImpl implements CountryService{
         return restClient.get(RestClient.GET_COUNTRY_URL).bodyToFlux(CountryInfo.class);
     }
 
-    @FunctionalInterface
-    interface CountrySupplier{
-        CountryInList newCountry();
-    }
 }

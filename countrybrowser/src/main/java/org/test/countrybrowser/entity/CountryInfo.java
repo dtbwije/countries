@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import javax.persistence.Entity;
 
 
 @Data
@@ -15,7 +12,7 @@ import javax.persistence.Entity;
 @Builder
 public class CountryInfo {
     String name;
-    String countryCode;
+    String alpha2Code;
     String capital;
     double population;
     String flagFileUrl;
@@ -29,11 +26,11 @@ public class CountryInfo {
     }
 
     public String getCountryCode() {
-        return countryCode;
+        return alpha2Code;
     }
 
     public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+        this.alpha2Code = countryCode;
     }
 
     public String getCapital() {
