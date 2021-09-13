@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.test.countrybrowser.mock.RestCountriesService;
-import org.test.countrybrowser.service.CountryService;
 import org.test.countrybrowser.service.CountryServiceImpl;
 
 import java.io.IOException;
@@ -35,8 +34,6 @@ class CountryControllerTest {
 
     @BeforeEach
     void initialize() {
-        String baseUrl = String.format("http://localhost:%s",
-                mockBackEnd.getPort());
         restCountriesService = new RestCountriesService();
     }
 
