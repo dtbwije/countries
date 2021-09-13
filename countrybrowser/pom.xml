@@ -122,17 +122,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<plugin>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-contract-maven-plugin</artifactId>
-				<version>${spring-cloud-contract.version}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<testFramework>JUNIT5</testFramework>
-					<baseClassForTests>org.test.countrybrowser.contract.BaseCountryServiceTest</baseClassForTests>
-				</configuration>
-			</plugin>
-
 		</plugins>
 	</build>
 
