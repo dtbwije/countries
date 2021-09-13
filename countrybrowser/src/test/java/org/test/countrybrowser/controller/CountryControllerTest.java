@@ -24,22 +24,24 @@ class CountryControllerTest {
     private WebTestClient webClient;
 
     public static MockWebServer mockBackEnd;
-    private RestCountriesService restCountriesService;
+    private static RestCountriesService restCountriesService;
 
     @BeforeAll
     static void setUp() throws IOException {
+        restCountriesService = new RestCountriesService();
+        restCountriesService.start();
         mockBackEnd = new MockWebServer();
         mockBackEnd.start();
     }
 
     @BeforeEach
     void initialize() {
-        restCountriesService = new RestCountriesService();
     }
 
     @AfterAll
     static void tearDown() throws IOException {
         mockBackEnd.shutdown();
+        restCountriesService.stop();
     }
 
     @SneakyThrows
