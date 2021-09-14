@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.test.countrybrowser.dto.request.CountryInList;
 import org.test.countrybrowser.mock.RestCountriesService;
 import org.test.countrybrowser.service.CountryServiceImpl;
 
@@ -29,14 +28,14 @@ class CountryControllerTest {
     public static MockWebServer mockBackEnd;
     private static RestCountriesService restCountriesService;
 
-    private static final String EXPECTED_LIST = "[{\"countryName\":\"Afghanistan\",\"countryCode\":\"Kabul\"},{\"countryName\":\"Åland Islands\",\"countryCode\":\"Mariehamn\"},{\"countryName\":\"Albania\",\"countryCode\":\"Tirana\"}]";
+    private static final String EXPECTED_LIST = "[{\"name\":\"Afghanistan\",\"countryCode\":\"Kabul\"},{\"name\":\"Åland Islands\",\"countryCode\":\"Mariehamn\"},{\"name\":\"Albania\",\"countryCode\":\"Tirana\"}]";
 
-    private static final String EXPECTED_COUNTRY = "{\"name\":\"Afghanistan\",\"code\":\"AF\",\"capital\":\"Kabul\",\"population\":2.7657145E7,\"flagFileUrl\":null}";
+    private static final String EXPECTED_COUNTRY = "{\"name\":\"Afghanistan\",\"code\":\"AF\",\"capital\":\"Kabul\",\"population\":2.7657145E7,\"flagFileUrl\":\"https://restcountries.eu/data/afg.svg\"}";
 
     @BeforeAll
     static void setUp() throws IOException {
         restCountriesService = new RestCountriesService();
-        restCountriesService.start();
+        restCountriesService.startForSuccess();
         mockBackEnd = new MockWebServer();
         mockBackEnd.start();
     }

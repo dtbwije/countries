@@ -46,7 +46,7 @@ public class CountryServiceImpl implements CountryService{
                         countryInfo.getAlpha2Code(),
                         countryInfo.getCapital(),
                         countryInfo.getPopulation(),
-                        countryInfo.getFlagFileUrl()))
+                        countryInfo.getFlag()))
                 .onErrorResume(e -> Mono.error(new Exception("Error in handling the get object .")));
     }
 

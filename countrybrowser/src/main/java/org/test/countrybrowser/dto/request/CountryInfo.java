@@ -15,6 +15,6 @@ public class CountryInfo {
     private String alpha2Code;
     private String capital;
     private double population;
-    private String flagFileUrl;
+    private String flag;
 
 }

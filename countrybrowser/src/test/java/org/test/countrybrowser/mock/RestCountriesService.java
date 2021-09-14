@@ -14,8 +14,7 @@ public class RestCountriesService {
         wireMockServer.start();
     }
 
-    public void start(){
-       //wireMockServer.stubFor(any((anyUrl())).willReturn(ok()));
+    public void startForSuccess(){
         wireMockServer.stubFor(get(urlEqualTo("/all")).willReturn(aResponse().withHeader(HttpHeaders.CONTENT_TYPE,"application/json").withBody(LIST_RESPONSE)));
         wireMockServer.stubFor(get(urlMatching("/name/.*")).willReturn(aResponse().withHeader(HttpHeaders.CONTENT_TYPE,"application/json").withBody(LIST_RESPONSE)));
 
