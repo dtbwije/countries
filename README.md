@@ -33,4 +33,7 @@ Implementation considerations
    1. Wiremock needs to create negative responses to test error cases.
    2. Error handling is not implemented. Eg. Flux.onErrorResume()
    3. Simple webapp is not implemented.
+5. CORS is not implmented
+6. Security tokens/ security headers is not considerded.
+7. Docker compose set up in not implemented.
 
