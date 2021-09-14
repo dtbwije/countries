@@ -1,0 +1,19 @@
+@startuml
+
+[web interface] as web
+package "Spring boot" {
+Http - [controller]
+[Service] <..> [cache]
+ [controller]  <--> [Service]
+ [config]--> [Service]
+}
+
+note right of [cache] : Optional
+[Countries Rest Service] as con
+
+[Service] -->  con
+ web --> [controller]
+
+
+
+@enduml

@@ -10,10 +10,13 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.test.countrybrowser.dto.request.CountryInList;
 import org.test.countrybrowser.mock.RestCountriesService;
 import org.test.countrybrowser.service.CountryServiceImpl;
 
 import java.io.IOException;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = CountryController.class)
@@ -25,6 +28,10 @@ class CountryControllerTest {
 
     public static MockWebServer mockBackEnd;
     private static RestCountriesService restCountriesService;
+
+    private static final String EXPECTED_LIST = "[{\"countryName\":\"Afghanistan\",\"countryCode\":\"Kabul\"},{\"countryName\":\"Åland Islands\",\"countryCode\":\"Mariehamn\"},{\"countryName\":\"Albania\",\"countryCode\":\"Tirana\"}]";
+
+    private static final String EXPECTED_COUNTRY = "{\"name\":\"Afghanistan\",\"code\":\"AF\",\"capital\":\"Kabul\",\"population\":2.7657145E7,\"flagFileUrl\":null}";
 
     @BeforeAll
     static void setUp() throws IOException {
@@ -48,12 +55,14 @@ class CountryControllerTest {
     @Test
     @DisplayName("get country list is a success.")
     void testGetCountriesIsASuccess() {
-        webClient.get().uri("/countryservice/countries").header(HttpHeaders.ACCEPT,"application/json").exchange().expectStatus().isOk();
+        webClient.get().uri("/countryservice/countries").header(HttpHeaders.ACCEPT,"application/json").exchange().expectHeader()
+                .contentType(APPLICATION_JSON).expectBody().json(EXPECTED_LIST);
     }
 
     @Test
     @DisplayName("")
     void testGetCountriesByNameIsASuccess() throws Exception {
-        webClient.get().uri("/countryservice/country/name/Albania").header(HttpHeaders.ACCEPT,"application/json").exchange().expectStatus().isOk();
+        webClient.get().uri("/countryservice/country/name/Sri Lanka").header(HttpHeaders.ACCEPT,"application/json").exchange()
+                .expectHeader().contentType(APPLICATION_JSON).expectBody().json(EXPECTED_COUNTRY);
     }
 }

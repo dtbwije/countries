@@ -25,7 +25,7 @@ public class RestCountriesService {
         wireMockServer.stop();
     }
 
-    private final static String LIST_RESPONSE = "[ {     \"name\": \"Afghanistan\",     \"topLevelDomain\":" +
+    public final static String LIST_RESPONSE = "[ {     \"name\": \"Afghanistan\",     \"topLevelDomain\":" +
             " [         \".af\"     ],     \"alpha2Code\": \"AF\",     \"alpha3Code\": \"AFG\",     " +
             "\"callingCodes\": [         \"93\"     ],     \"capital\": \"Kabul\",     \"altSpellings\": [\n " +
             "           \"AF\",         \"Afġānistān\"     ],     \"region\": \"Asia\",     " +
