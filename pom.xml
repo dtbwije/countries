@@ -17,6 +17,7 @@
 
     <modules>
         <module>countrybrowser</module>
+        <module>web-app</module>
     </modules>
 
     <repositories>
