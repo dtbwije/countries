@@ -30,8 +30,8 @@ public class CountryServiceImpl implements CountryService{
                 .get(RestClient.GET_COUNTRIES_LIST_URL)
                 .bodyToFlux(CountryInList.class)
                 .log()
-                .map(countryInList -> new CountryList4Response(countryInList.getName(),countryInList.getCapital()))
-                .onErrorResume(e -> Flux.error(new Exception("Error in handling the  get list object.")));
+                .map(countryInList -> new CountryList4Response(countryInList.getName(),countryInList.getAlpha2Code()))
+                .onErrorResume(e -> Flux.error(new Exception("Error in handling the get object .")));
     }
 
     @SneakyThrows

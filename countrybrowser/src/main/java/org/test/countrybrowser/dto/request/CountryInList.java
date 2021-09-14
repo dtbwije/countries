@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class CountryInList {
 
     private String name;
-    private String capital;
+    private String alpha2Code;
 
 }

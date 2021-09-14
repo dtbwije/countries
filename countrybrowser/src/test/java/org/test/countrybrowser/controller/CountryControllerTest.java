@@ -28,7 +28,7 @@ class CountryControllerTest {
     public static MockWebServer mockBackEnd;
     private static RestCountriesService restCountriesService;
 
-    private static final String EXPECTED_LIST = "[{\"name\":\"Afghanistan\",\"countryCode\":\"Kabul\"},{\"name\":\"Åland Islands\",\"countryCode\":\"Mariehamn\"},{\"name\":\"Albania\",\"countryCode\":\"Tirana\"}]";
+    private static final String EXPECTED_LIST = "[{\"name\":\"Afghanistan\",\"countryCode\":\"AF\"},{\"name\":\"Åland Islands\",\"countryCode\":\"AX\"},{\"name\":\"Albania\",\"countryCode\":\"AL\"}]";
 
     private static final String EXPECTED_COUNTRY = "{\"name\":\"Afghanistan\",\"code\":\"AF\",\"capital\":\"Kabul\",\"population\":2.7657145E7,\"flagFileUrl\":\"https://restcountries.eu/data/afg.svg\"}";
 
