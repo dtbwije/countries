@@ -3,7 +3,6 @@ package org.test.countrybrowser.service;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.test.countrybrowser.client.RestClient;
@@ -29,8 +28,10 @@ public class CountryServiceImpl implements CountryService{
         log.info("Getting all countries list at the service." );
         return restClient(baseUrl)
                 .get(RestClient.GET_COUNTRIES_LIST_URL)
-                .bodyToFlux(CountryInList.class).log()
-                .map(countryInList -> new CountryList4Response(countryInList.getName(),countryInList.getCapital()));
+                .bodyToFlux(CountryInList.class)
+                .log()
+                .map(countryInList -> new CountryList4Response(countryInList.getName(),countryInList.getCapital()))
+                .onErrorResume(e -> Flux.error(new Exception("Error in handling the  get list object.")));
     }
 
     @SneakyThrows
@@ -45,7 +46,8 @@ public class CountryServiceImpl implements CountryService{
                         countryInfo.getAlpha2Code(),
                         countryInfo.getCapital(),
                         countryInfo.getPopulation(),
-                        countryInfo.getFlagFileUrl()));
+                        countryInfo.getFlagFileUrl()))
+                .onErrorResume(e -> Mono.error(new Exception("Error in handling the get object .")));
     }
 
     private RestClient restClient(String baseUrl){

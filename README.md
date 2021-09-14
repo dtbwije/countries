@@ -36,4 +36,5 @@ Implementation considerations
 5. CORS is not implmented
 6. Security tokens/ security headers is not considerded.
 7. Docker compose set up in not implemented.
+8. Configuration value restrictions are not imposed.
 
